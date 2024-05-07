@@ -98,8 +98,6 @@
 			<true>
 				<insert>
 					dependencies {
-						implementation 'com.google.android.gms:play-services-games:23.1.0'
-
 						implementation platform('com.google.firebase:firebase-bom:32.3.1')
 						implementation 'com.google.firebase:firebase-analytics'
 				</insert>
@@ -182,6 +180,10 @@
 				<copyFile src="$S(PluginDir)/../../../../$S(ConfigFile)" dst="$S(BuildDir)/gradle/app/google-services.json" force="false"/>
 				<copyFile src="$S(PluginDir)/../../../../$S(ConfigFile)" dst="$S(BuildDir)/gradle/app/src/debug/google-services.json" force="false"/>
 				<copyFile src="$S(PluginDir)/../../../../$S(ConfigFile)" dst="$S(BuildDir)/gradle/app/src/release/google-services.json" force="false"/>
+
+				<copyFile src="$S(PluginDir)/../../../../$S(ConfigFile)" dst="$S(BuildDir)/gradle/AFSProject/app/google-services.json" force="false"/>
+				<copyFile src="$S(PluginDir)/../../../../$S(ConfigFile)" dst="$S(BuildDir)/gradle/AFSProject/app/src/debug/google-services.json" force="false"/>
+				<copyFile src="$S(PluginDir)/../../../../$S(ConfigFile)" dst="$S(BuildDir)/gradle/AFSProject/app/src/release/google-services.json" force="false"/>
 			</true>
 		</if>
 	</prebuildCopies>

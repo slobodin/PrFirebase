@@ -1,7 +1,7 @@
 // Copyright 2020-2024 Nikolay Prudnikov. All Rights Reserved.
 
 using System.IO;
-using Tools.DotNETCommon;
+using EpicGames.Core;
 
 namespace UnrealBuildTool.Rules
 {

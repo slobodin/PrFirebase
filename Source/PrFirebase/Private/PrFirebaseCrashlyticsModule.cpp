@@ -188,12 +188,14 @@ void UPrFirebaseCrashlyticsModule::WriteBlueprintCallstack()
 {
 #if DO_BLUEPRINT_GUARD
 	const FBlueprintContextTracker* BlueprintExceptionTracker = FBlueprintContextTracker::TryGet();
-	if (BlueprintExceptionTracker && BlueprintExceptionTracker->GetScriptStack().Num() > 0)
+	if (BlueprintExceptionTracker && BlueprintExceptionTracker->GetCurrentScriptStack().Num() > 0)
 	{
-		FString ScriptStack = FString::Printf(TEXT("Script Stack (%d frames):\n"), BlueprintExceptionTracker->GetScriptStack().Num());
-		for (int32 FrameIdx = BlueprintExceptionTracker->GetScriptStack().Num() - 1; FrameIdx >= 0; --FrameIdx)
+		FString ScriptStack = FString::Printf(TEXT("Script Stack (%d frames):\n"), BlueprintExceptionTracker->GetCurrentScriptStack().Num());
+		for (int32 FrameIdx = BlueprintExceptionTracker->GetCurrentScriptStack().Num() - 1; FrameIdx >= 0; --FrameIdx)
 		{
-			ScriptStack += BlueprintExceptionTracker->GetScriptStack()[FrameIdx]->GetStackDescription() + TEXT("\n");
+			TStringBuilder<512> StringBuilder;
+			BlueprintExceptionTracker->GetCurrentScriptStack()[FrameIdx]->GetStackDescription(StringBuilder);
+			ScriptStack += FString(StringBuilder) + TEXT("\n");
 		}
 
 		WriteLog(ScriptStack);
