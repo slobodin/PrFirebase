@@ -1,4 +1,4 @@
-// Copyright 2021-2022 Anton Rassadin. All Rights Reserved.
+// Copyright 2021-2024 Anton Rassadin. All Rights Reserved.
 
 #pragma once
 

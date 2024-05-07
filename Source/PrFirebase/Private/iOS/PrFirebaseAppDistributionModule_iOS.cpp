@@ -1,4 +1,4 @@
-// Copyright 2020-2021 Vladimir Alyamkin. All Rights Reserved.
+// Copyright 2020-2024 Vladimir Alyamkin. All Rights Reserved.
 
 #include "iOS/PrFirebaseAppDistributionModule_iOS.h"
 

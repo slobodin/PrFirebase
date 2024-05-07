@@ -1,4 +1,4 @@
-// Copyright 2021-2023 Anton Rassadin. All Rights Reserved.
+// Copyright 2021-2024 Anton Rassadin. All Rights Reserved.
 
 package com.pr.firebase.analytics;
 
