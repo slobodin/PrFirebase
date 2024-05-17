@@ -180,10 +180,6 @@
 				<copyFile src="$S(PluginDir)/../../../../$S(ConfigFile)" dst="$S(BuildDir)/gradle/app/google-services.json" force="false"/>
 				<copyFile src="$S(PluginDir)/../../../../$S(ConfigFile)" dst="$S(BuildDir)/gradle/app/src/debug/google-services.json" force="false"/>
 				<copyFile src="$S(PluginDir)/../../../../$S(ConfigFile)" dst="$S(BuildDir)/gradle/app/src/release/google-services.json" force="false"/>
-
-				<copyFile src="$S(PluginDir)/../../../../$S(ConfigFile)" dst="$S(BuildDir)/gradle/AFSProject/app/google-services.json" force="false"/>
-				<copyFile src="$S(PluginDir)/../../../../$S(ConfigFile)" dst="$S(BuildDir)/gradle/AFSProject/app/src/debug/google-services.json" force="false"/>
-				<copyFile src="$S(PluginDir)/../../../../$S(ConfigFile)" dst="$S(BuildDir)/gradle/AFSProject/app/src/release/google-services.json" force="false"/>
 			</true>
 		</if>
 	</prebuildCopies>
