@@ -1,7 +1,7 @@
-// Copyright 2020-2021 Nikolay Prudnikov. All Rights Reserved.
+// Copyright 2020-2024 Nikolay Prudnikov. All Rights Reserved.
 
 using System.IO;
-using Tools.DotNETCommon;
+using EpicGames.Core;
 
 namespace UnrealBuildTool.Rules
 {
@@ -22,7 +22,7 @@ namespace UnrealBuildTool.Rules
             bool bFirebaseAuthEnable = false;
             bool bFirebasePerformanceEnable = false;
             bool bFirebaseAppDistributionEnable = false;
-            
+
             EngineConfig.TryGetValue("/Script/PrFirebase.PrFirebaseSettings", "bFirebaseEnable", out bFirebaseEnable);
             EngineConfig.TryGetValue("/Script/PrFirebase.PrFirebaseSettings", "bFirebaseCrashlyticsEnable", out bFirebaseCrashlyticsEnable);
             EngineConfig.TryGetValue("/Script/PrFirebase.PrFirebaseSettings", "bFirebaseRemoteConfigEnable", out bFirebaseRemoteConfigEnable);
@@ -61,7 +61,7 @@ namespace UnrealBuildTool.Rules
             		EngineConfig.TryGetValue("/Script/IOSRuntimeSettings.IOSRuntimeSettings", "bGeneratedSYMBundle", out bGeneratedSYMBundle);
             		EngineConfig.TryGetValue("/Script/IOSRuntimeSettings.IOSRuntimeSettings", "bGeneratedSYMFile", out bGeneratedSYMFile);
 
-            		if ((!bGeneratedSYMBundle || !bGeneratedSYMFile) && bFirebaseCrashlyticsEnable) 
+            		if ((!bGeneratedSYMBundle || !bGeneratedSYMFile) && bFirebaseCrashlyticsEnable)
             		{
             			bSymbolsWarning = true;
             		}
@@ -73,7 +73,7 @@ namespace UnrealBuildTool.Rules
 							"../../ThirdParty/iOS/FirebaseAnalytics.embeddedframework.zip"
 						)
 					);
-					
+
 					PublicAdditionalFrameworks.Add(
 						new Framework(
 							"FirebaseCore",
@@ -94,35 +94,35 @@ namespace UnrealBuildTool.Rules
 							"../../ThirdParty/iOS/FirebaseCoreInternal.embeddedframework.zip"
 						)
 					);
-					
+
 					PublicAdditionalFrameworks.Add(
 						new Framework(
 							"FirebaseInstallations",
 							"../../ThirdParty/iOS/FirebaseInstallations.embeddedframework.zip"
 						)
 					);
-					
+
 					PublicAdditionalFrameworks.Add(
 						new Framework(
 							"GoogleAppMeasurement",
 							"../../ThirdParty/iOS/GoogleAppMeasurement.embeddedframework.zip"
 						)
 					);
-					
+
 					PublicAdditionalFrameworks.Add(
 						new Framework(
 							"GoogleDataTransport",
 							"../../ThirdParty/iOS/GoogleDataTransport.embeddedframework.zip"
 						)
 					);
-					
+
 					PublicAdditionalFrameworks.Add(
 						new Framework(
 							"GoogleUtilities",
 							"../../ThirdParty/iOS/GoogleUtilities.embeddedframework.zip"
 						)
 					);
-					
+
 					PublicAdditionalFrameworks.Add(
 						new Framework(
 							"nanopb",
@@ -143,7 +143,7 @@ namespace UnrealBuildTool.Rules
 							"../../ThirdParty/iOS/PromisesSwift.embeddedframework.zip"
 						)
 					);
-					
+
 					/* Crashlytics */
 					if (bFirebaseCrashlyticsEnable)
 					{
@@ -154,7 +154,7 @@ namespace UnrealBuildTool.Rules
 							)
 						);
                     }
-                    
+
                     /* Remote Config */
                     if (bFirebaseRemoteConfigEnable)
                     {
@@ -164,39 +164,7 @@ namespace UnrealBuildTool.Rules
 								"../../ThirdParty/iOS/FirebaseABTesting.embeddedframework.zip"
 							)
 						);
-						
-						PublicAdditionalFrameworks.Add(
-							new Framework(
-								"FirebaseRemoteConfig",
-								"../../ThirdParty/iOS/FirebaseRemoteConfig.embeddedframework.zip"
-							)
-						);
-						
-						PublicAdditionalFrameworks.Add(
-							new Framework(
-								"Protobuf",
-								"../../ThirdParty/iOS/Protobuf.embeddedframework.zip"
-							)
-						);
-                    }
-                    
-                    /* Performance */
-                    if (bFirebasePerformanceEnable)
-                    {
-						PublicAdditionalFrameworks.Add(
-							new Framework(
-								"FirebaseABTesting",
-								"../../ThirdParty/iOS/FirebaseABTesting.embeddedframework.zip"
-							)
-						);
-						
-						PublicAdditionalFrameworks.Add(
-							new Framework(
-								"FirebasePerformance",
-								"../../ThirdParty/iOS/FirebasePerformance.embeddedframework.zip"
-							)
-						);
-						
+
 						PublicAdditionalFrameworks.Add(
 							new Framework(
 								"FirebaseRemoteConfig",
@@ -211,7 +179,39 @@ namespace UnrealBuildTool.Rules
 							)
 						);
                     }
-                    
+
+                    /* Performance */
+                    if (bFirebasePerformanceEnable)
+                    {
+						PublicAdditionalFrameworks.Add(
+							new Framework(
+								"FirebaseABTesting",
+								"../../ThirdParty/iOS/FirebaseABTesting.embeddedframework.zip"
+							)
+						);
+
+						PublicAdditionalFrameworks.Add(
+							new Framework(
+								"FirebasePerformance",
+								"../../ThirdParty/iOS/FirebasePerformance.embeddedframework.zip"
+							)
+						);
+
+						PublicAdditionalFrameworks.Add(
+							new Framework(
+								"FirebaseRemoteConfig",
+								"../../ThirdParty/iOS/FirebaseRemoteConfig.embeddedframework.zip"
+							)
+						);
+
+						PublicAdditionalFrameworks.Add(
+							new Framework(
+								"Protobuf",
+								"../../ThirdParty/iOS/Protobuf.embeddedframework.zip"
+							)
+						);
+                    }
+
                     /* Auth */
                     if (bFirebaseAuthEnable)
                     {
@@ -221,7 +221,7 @@ namespace UnrealBuildTool.Rules
 								"../../ThirdParty/iOS/FirebaseAuth.embeddedframework.zip"
 							)
 						);
-						
+
 						PublicAdditionalFrameworks.Add(
 							new Framework(
 								"GTMSessionFetcher",
@@ -229,7 +229,7 @@ namespace UnrealBuildTool.Rules
 							)
 						);
                     }
-                    
+
                     if (bFirebaseAppDistributionEnable)
                     {
                         PublicAdditionalFrameworks.Add(
@@ -239,9 +239,9 @@ namespace UnrealBuildTool.Rules
                             )
                         );
                     }
-                    
+
                     PublicSystemLibraries.Add("sqlite3");
-                    
+
                     PrivateIncludePaths.Add("PrFirebase/External/iOS");
 
                     string PluginPath = Utils.MakePathRelativeTo(ModuleDirectory, Target.RelativeEnginePath);
@@ -263,7 +263,7 @@ namespace UnrealBuildTool.Rules
 					bFirebaseEnable = false;
                 }
             }
-			
+
 			PublicDefinitions.Add("WITH_FIREBASE=" + (bFirebaseEnable ? "1" : "0"));
 			PublicDefinitions.Add("WITH_FIREBASE_CRASHLYTICS=" + (bFirebaseEnable && bFirebaseCrashlyticsEnable ? "1" : "0"));
 			PublicDefinitions.Add("WITH_FIREBASE_REMOTECONFIG=" + (bFirebaseEnable && bFirebaseRemoteConfigEnable ? "1" : "0"));

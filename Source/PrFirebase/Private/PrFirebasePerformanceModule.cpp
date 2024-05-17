@@ -1,4 +1,4 @@
-// Copyright 2020-2021 Nikolay Prudnikov. All Rights Reserved.
+// Copyright 2020-2024 Nikolay Prudnikov. All Rights Reserved.
 
 #include "PrFirebasePerformanceModule.h"
 
@@ -76,7 +76,7 @@ bool FPrFirebasePlatformMemory::Initialize()
 		return true;
 	});
 
-	FTicker::GetCoreTicker().AddTicker(Delegate, 5.f);
+	FTSTicker::GetCoreTicker().AddTicker(Delegate, 5.f);
 
 	return true;
 }
@@ -620,8 +620,8 @@ void UPrFirebasePerformanceModule::OnEndFrame()
 				MemTrace.SetMetric(TEXT("physical_rel"), FMath::RoundToInt((static_cast<float>(Stats.UsedPhysical) / static_cast<float>(Stats.AvailablePhysical)) * 100.f));
 			}
 
-			MemTrace.SetMetric(TEXT("textures_mb"), FMath::RoundToInt(static_cast<float>(GCurrentTextureMemorySize) / 1024.f));
-			MemTrace.SetMetric(TEXT("render_targets_mb"), FMath::RoundToInt(static_cast<float>(GCurrentRendertargetMemorySize) / 1024.f));
+			MemTrace.SetMetric(TEXT("textures_mb"), FMath::RoundToInt(static_cast<float>(GRHIGlobals.StreamingTextureMemorySizeInKB) / 1024.f));
+			MemTrace.SetMetric(TEXT("render_targets_mb"), FMath::RoundToInt(static_cast<float>(GRHIGlobals.NonStreamingTextureMemorySizeInKB) / 1024.f));
 
 			MemTrace.Stop();
 

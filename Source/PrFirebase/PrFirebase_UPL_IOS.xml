@@ -4,14 +4,11 @@
 		<log text="Firebase Initialization"/>
 		<setBoolFromProperty result="bEnabled" ini="Engine" section="/Script/PrFirebase.PrFirebaseSettings" property="bFirebaseEnable" default="false"/>
 		<setStringFromProperty result="ConfigFile" ini="Engine" section="/Script/PrFirebase.PrFirebaseSettings" property="FirebaseIOSConfig" default="Config/Firebase/GoogleService-Info.plist"/>
-	</init>
 
-	<iosPListUpdates>
 		<if condition="bEnabled">
 			<true>
-				<copyFile src="$S(PluginDir)/../../../../$S(ConfigFile)" dst="$S(BuildDir)/GoogleService-Info.plist" force="false"/>
+				<copyFile src="$S(PluginDir)/../../../../$S(ConfigFile)" dst="$S(BuildDir)/GoogleService-Info.plist"/>
 			</true>
 		</if>
-	</iosPListUpdates>
-
+	</init>
 </root>
