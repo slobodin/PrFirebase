@@ -241,11 +241,21 @@ namespace UnrealBuildTool.Rules
                     }
 
                     PublicSystemLibraries.Add("sqlite3");
+                    PublicSystemLibraries.Add("z");
 
                     PrivateIncludePaths.Add("PrFirebase/External/iOS");
 
                     string PluginPath = Utils.MakePathRelativeTo(ModuleDirectory, Target.RelativeEnginePath);
                     AdditionalPropertiesForReceipt.Add("IOSPlugin", Path.Combine(PluginPath, "PrFirebase_UPL_IOS.xml"));
+
+                    // NOTE: By default Unreal Engine does not have paths to Swift libraries added to Library Search paths,
+                    // so you have to point UBT to it. Swift libraries are located in Xcode toolchain.
+                    // https://rassadin.net/swift-frameworks-unreal/
+                    string SDKROOT = Utils.RunLocalProcessAndReturnStdOut("/usr/bin/xcrun", "--sdk iphoneos --show-sdk-path");
+                    PublicSystemLibraryPaths.Add(SDKROOT + "/usr/lib/swift");
+                    PublicSystemLibraryPaths.Add(SDKROOT + "../../../../../../Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos");
+                    PublicSystemLibraryPaths.Add(SDKROOT + "../../../../../../Toolchains/XcodeDefault.xctoolchain/usr/lib/swift-5.0/iphoneos");
+                    PublicSystemLibraryPaths.Add(SDKROOT + "../../../../../../Toolchains/XcodeDefault.xctoolchain/usr/lib/swift-5.5/iphoneos");
                 }
                 else if (Target.Platform == UnrealTargetPlatform.Android)
                 {

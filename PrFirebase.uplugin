@@ -16,7 +16,7 @@
 		{
 			"Name" : "PrFirebase",
 			"Type" : "Runtime",
-			"LoadingPhase": "PreLoadingScreen"
+			"LoadingPhase": "PostDefault"
 		}
 	]
 }

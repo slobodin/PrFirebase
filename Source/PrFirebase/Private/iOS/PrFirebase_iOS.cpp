@@ -29,6 +29,7 @@ void UPrFirebase_iOS::Initialize()
 	dispatch_async(dispatch_get_main_queue(), ^{
 	  PreInitializeModules_AnyThread();
 	  [FIRApp configure];
+	  [FIRAnalytics setAnalyticsCollectionEnabled:YES];
 	  InitializeModules_AnyThread();
 	});
 }
