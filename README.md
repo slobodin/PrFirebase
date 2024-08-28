@@ -17,7 +17,7 @@ Primary supported modules:
 Planned:
 * Functions
 
-Current version: **1.0 R 1** (UE 4.26)
+Current version: **1.0 R 2** (UE 5.4)
 
 ![SCREENSHOT](SCREENSHOT.jpg)
 
