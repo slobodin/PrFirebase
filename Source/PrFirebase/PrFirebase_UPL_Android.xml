@@ -20,9 +20,6 @@
 						</addElements>
 					</true>
 				</if>
-
-				<!-- Force disable heap pointer tagging as it's required for Crashlytics NDK version 17.3.0 -->
-				<addAttribute tag="application" name="android:allowNativeHeapPointerTagging" value="false"/>
 			</true>
 		</if>
 	</androidManifestUpdates>
