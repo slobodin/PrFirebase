@@ -64,7 +64,7 @@
 					}
 
 					dependencies {
-						classpath 'com.google.gms:google-services:4.3.8'
+						classpath 'com.google.gms:google-services:4.4.3'
 				</insert>
 
 				<if condition="bFirebaseCrashlyticsEnable">
@@ -95,7 +95,7 @@
 			<true>
 				<insert>
 					dependencies {
-						implementation platform('com.google.firebase:firebase-bom:32.3.1')
+						implementation platform('com.google.firebase:firebase-bom:34.3.0')
 						implementation 'com.google.firebase:firebase-analytics'
 				</insert>
 
