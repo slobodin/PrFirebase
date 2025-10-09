@@ -1,5 +1,6 @@
 // Copyright 2020-2024 Nikolay Prudnikov. All Rights Reserved.
 
+using System;
 using System.IO;
 using EpicGames.Core;
 
@@ -56,6 +57,8 @@ namespace UnrealBuildTool.Rules
             {
                 if (Target.Platform == UnrealTargetPlatform.IOS)
                 {
+                	throw new NotImplementedException("Ensure that plugin works and all its dependencies are up-to-date.");
+
                 	bool bGeneratedSYMBundle = false;
                 	bool bGeneratedSYMFile = false;
             		EngineConfig.TryGetValue("/Script/IOSRuntimeSettings.IOSRuntimeSettings", "bGeneratedSYMBundle", out bGeneratedSYMBundle);
