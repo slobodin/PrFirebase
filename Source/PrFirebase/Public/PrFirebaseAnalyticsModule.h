@@ -137,6 +137,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Firebase|Analytics")
 	virtual void LogRevenue(float RevenueUSD) { Firebase_NotImplemented(); }
 
+	UFUNCTION(BlueprintCallable, Category = "Firebase|Analytics")
+	virtual void SetUserProperty(FString name, FString value) { Firebase_NotImplemented(); }
+
 	UPROPERTY(BlueprintAssignable)
 	FPrAppInstanceIdReadyDelegate AppInstanceIdReadyDelegate;
 };

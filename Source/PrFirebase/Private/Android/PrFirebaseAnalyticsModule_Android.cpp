@@ -325,6 +325,22 @@ void UPrFirebaseAnalyticsModule_Android::LogRevenue(float RevenueUSD)
 	}
 }
 
+void UPrFirebaseAnalyticsModule_Android::SetUserProperty(FString name, FString value)
+{
+	if (auto Env = FAndroidApplication::GetJavaEnv())
+	{
+		static auto Method = FJavaWrapper::FindMethod(Env, FJavaWrapper::GameActivityClassID, "AndroidThunkJava_FirebaseAnalytics_SetUserProperty", "(Ljava/lang/String;Ljava/lang/String;)V", false);
+
+		jstring NameParam = Env->NewStringUTF(TCHAR_TO_UTF8(*name));
+		jstring ValueParam = Env->NewStringUTF(TCHAR_TO_UTF8(*value));
+
+		FJavaWrapper::CallVoidMethod(Env, FJavaWrapper::GameActivityThis, Method, NameParam, ValueParam);
+
+		Env->DeleteLocalRef(NameParam);
+		Env->DeleteLocalRef(ValueParam);
+	}
+}
+
 extern "C" {
 JNIEXPORT void Java_com_pr_firebase_analytics_PrFirebaseAnalytics_OnAppInstanceIdReady(JNIEnv* env, jobject obj)
 {

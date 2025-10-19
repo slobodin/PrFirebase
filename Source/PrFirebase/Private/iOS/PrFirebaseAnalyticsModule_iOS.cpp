@@ -156,4 +156,9 @@ void UPrFirebaseAnalyticsModule_iOS::LogRevenue(float RevenueUSD)
 	// clang-format on
 }
 
+void UPrFirebaseAnalyticsModule_iOS::SetUserProperty(FString name, FString value)
+{
+#error "implement SetUserProperty";
+}
+
 #endif // WITH_FIREBASE && PLATFORM_IOS

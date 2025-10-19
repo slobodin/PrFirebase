@@ -38,5 +38,7 @@ public:
 
 	virtual void LogRevenue(float RevenueUSD) override;
 
+	virtual void SetUserProperty(FString name, FString value) override;
+
 #endif
 };

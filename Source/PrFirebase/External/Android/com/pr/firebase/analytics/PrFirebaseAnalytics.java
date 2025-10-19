@@ -116,4 +116,8 @@ public class PrFirebaseAnalytics {
         mFirebaseAnalytics.setDefaultEventParameters(params);	
     }
     
+    public void setUserProperty(String name, String value)
+    {
+        mFirebaseAnalytics.setUserProperty(name, value);
+    }
 }

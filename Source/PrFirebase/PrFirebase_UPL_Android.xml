@@ -299,6 +299,11 @@
 							PrFirebase.analyticsProxy().logImpression(impressionData);
 						}
 
+			public void AndroidThunkJava_FirebaseAnalytics_SetUserProperty(String name, String value)
+						{
+							PrFirebase.analyticsProxy().setUserProperty(name, value);
+						}
+
 			public void AndroidThunkJava_FirebaseAnalytics_RequestAppInstanceId()
 						{
 							PrFirebase.analyticsProxy().requestAppInstanceId();
