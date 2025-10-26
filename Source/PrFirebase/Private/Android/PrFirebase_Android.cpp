@@ -14,9 +14,26 @@
 #include "PrFirebasePerformanceModule.h"
 #include "PrFirebaseRemoteConfigModule.h"
 
+#include "Modules/ModuleManager.h"
+#include "PrFirebase.h"
+
 #include "Android/AndroidApplication.h"
 #include "Android/AndroidJNI.h"
 #include <android_native_app_glue.h>
+
+extern "C" {
+
+	JNI_METHOD void Java_com_pr_firebase_PrFirebase_onApplicationDestroyed(JNIEnv*, jobject)
+	{
+		if (auto prFirebaseModule = static_cast<IPrFirebase*>(FModuleManager::Get().GetModule("PrFirebase")))
+		{
+			if (auto prAnalytics = prFirebaseModule->FirebaseProxy->GetAnalyticsModule())
+			{
+				prAnalytics->AppBeingDestroyedAnyThread.ExecuteIfBound();
+			}
+		}
+	}
+}
 
 void UPrFirebase_Android::InitializeModuleList()
 {

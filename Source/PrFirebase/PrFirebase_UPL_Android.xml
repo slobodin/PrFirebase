@@ -336,4 +336,16 @@
 		</if>
 	</gameActivityOnCreateAdditions>
 
+    <gameActivityOnDestroyAdditions>
+        <if condition="bFirebaseEnable">
+            <true>
+                <insert>
+                    // Begin PrFirebase deinitialize
+                    PrFirebase.deinitialize();
+                    // End PrFirebase deinitialize
+                </insert>
+            </true>
+        </if>
+    </gameActivityOnDestroyAdditions>
+
 </root>
