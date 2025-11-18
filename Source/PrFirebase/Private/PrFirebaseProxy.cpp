@@ -65,7 +65,8 @@ void UPrFirebaseProxy::InitializeFirebase()
 	}
 	else
 	{
-		UE_LOG(LogFirebase, Fatal, TEXT("Firebase already initialized"));
+		// this can happen when we PIE
+		//UE_LOG(LogFirebase, Fatal, TEXT("Firebase already initialized"));
 	}
 }
 
