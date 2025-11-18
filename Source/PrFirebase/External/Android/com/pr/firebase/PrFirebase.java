@@ -11,7 +11,6 @@ import android.app.NativeActivity;
 public class PrFirebase {
 	
 	private static boolean isInit = false;
-	private static boolean isDestoyed = false;
 	private static PrFirebaseCrashlytics crashlytics = null;
 	private static PrFirebasePerformance performance = null;
 	private static PrFirebaseAnalytics analytics = null;
@@ -24,15 +23,6 @@ public class PrFirebase {
 			crashlytics = new PrFirebaseCrashlytics(activity);
 			performance = new PrFirebasePerformance(activity);
 			analytics = new PrFirebaseAnalytics(activity);
-		}
-	}
-
-	static public void deinitialize()
-	{
-		if (!isDestoyed)
-		{
-			isDestoyed = true;
-			onApplicationDestroyed();
 		}
 	}
 
@@ -51,5 +41,4 @@ public class PrFirebase {
 		return analytics;
 	}
 
-	private static native void onApplicationDestroyed();
 }

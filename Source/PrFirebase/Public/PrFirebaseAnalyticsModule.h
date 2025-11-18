@@ -89,8 +89,6 @@ struct PRFIREBASE_API FPrFirebasePurchaseData
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FPrAppInstanceIdReadyDelegate);
 
-DECLARE_DELEGATE(FPrAppBeingDestroyedAnyThreadDelegate);
-
 UCLASS()
 class PRFIREBASE_API UPrFirebaseAnalyticsModule : public UPrFirebaseModule
 {
@@ -144,6 +142,4 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 	FPrAppInstanceIdReadyDelegate AppInstanceIdReadyDelegate;
-
-	FPrAppBeingDestroyedAnyThreadDelegate AppBeingDestroyedAnyThread;
 };
