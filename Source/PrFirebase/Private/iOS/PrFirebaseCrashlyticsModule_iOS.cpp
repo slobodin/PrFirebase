@@ -49,4 +49,9 @@ void UPrFirebaseCrashlyticsModule_iOS::Initialize_AnyThread()
 	CatchEngineLogs();
 }
 
+void UPrFirebaseCrashlyticsModule_iOS::SetCrashlyticsCollectionEnabled(bool bEnabled)
+{
+#error "implement it"
+}
+
 #endif // WITH_FIREBASE_CRASHLYTICS && PLATFORM_IOS

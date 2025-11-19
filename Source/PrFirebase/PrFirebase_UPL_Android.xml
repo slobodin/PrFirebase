@@ -16,9 +16,26 @@
 					<true>
 						<addElements tag="application">
 							<meta-data android:name="firebase_performance_logcat_enabled" android:value="false"/>
+
+                            <!-- Disable the performance library at compile time, but allow to enable it at runtime (after user consent) -->
+                            <meta-data android:name="firebase_performance_collection_enabled" android:value="false"/>
 						</addElements>
 					</true>
 				</if>
+
+                <if condition="bFirebaseCrashlyticsEnable">
+                    <true>
+                        <addElements tag="application">
+                            <!-- Disable crashlytics at compile time, but allow to enable it at runtime (after user consent) -->
+                            <meta-data android:name="firebase_crashlytics_collection_enabled" android:value="false"/>
+                        </addElements>
+                    </true>
+                </if>
+
+                <addElements tag="application">
+                    <!-- Disable the analytics library at compile time, but allow to enable it at runtime (after user consent) -->
+                    <meta-data android:name="firebase_analytics_collection_enabled" android:value="false" />
+                </addElements>
 			</true>
 		</if>
 	</androidManifestUpdates>
@@ -219,6 +236,11 @@
 						{
 							PrFirebase.crashlyticsProxy().addAttribute(Key, Value);
 						}
+                        
+                        public void AndroidThunkJava_FirebaseCrashlytics_SetCrashlyticsCollectionEnabled(boolean enabled)
+                        {
+                            PrFirebase.crashlyticsProxy().setCrashlyticsCollectionEnabled(enabled);
+                        }
 
             // FirebasePerformance
 
@@ -250,6 +272,11 @@
             public void AndroidThunkJava_FirebasePerformance_RemoveAttribute(int index, String name)
 						{
 							PrFirebase.performanceProxy().removeAttribute(index, name);
+						}
+                        
+            public void AndroidThunkJava_FirebasePerformance_SetPerformanceCollectionEnabled(boolean enabled)
+						{
+							PrFirebase.performanceProxy().setPerformanceCollectionEnabled(enabled);
 						}
 
 			// Firebase Analytics
@@ -317,6 +344,11 @@
 			public void AndroidThunkJava_FirebaseAnalytics_LogRevenue(float RevenueUSD)
 						{
 							PrFirebase.analyticsProxy().logRevenue(RevenueUSD);
+						}
+                        
+			public void AndroidThunkJava_FirebaseAnalytics_SetAnalyticsCollectionEnabled(boolean enabled)
+						{
+							PrFirebase.analyticsProxy().setAnalyticsCollectionEnabled(enabled);
 						}
 					]]>
 				</insert>

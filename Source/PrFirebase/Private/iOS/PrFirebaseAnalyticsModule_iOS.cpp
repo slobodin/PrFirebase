@@ -161,4 +161,9 @@ void UPrFirebaseAnalyticsModule_iOS::SetUserProperty(FString name, FString value
 #error "implement SetUserProperty";
 }
 
+void UPrFirebaseAnalyticsModule_iOS::SetAnalyticsCollectionEnabled(bool enabled)
+{
+#error "implement this function & also disable default analytics collection for ios";
+}
+
 #endif // WITH_FIREBASE && PLATFORM_IOS

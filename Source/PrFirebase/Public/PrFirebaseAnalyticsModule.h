@@ -140,6 +140,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Firebase|Analytics")
 	virtual void SetUserProperty(FString name, FString value) { Firebase_NotImplemented(); }
 
+	virtual void SetAnalyticsCollectionEnabled(bool enabled) { Firebase_NotImplemented(); }
+
 	UPROPERTY(BlueprintAssignable)
 	FPrAppInstanceIdReadyDelegate AppInstanceIdReadyDelegate;
 };

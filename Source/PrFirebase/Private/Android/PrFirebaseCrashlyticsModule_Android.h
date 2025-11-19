@@ -24,6 +24,8 @@ public:
 
 	virtual void AddAttribute(const FString& Key, const FString& Value) override;
 
+	virtual void SetCrashlyticsCollectionEnabled(bool bEnabled) override;
+
 protected:
 	virtual void Initialize_AnyThread() override;
 

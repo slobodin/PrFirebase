@@ -91,4 +91,15 @@ void UPrFirebasePerformanceModule_Android::PostInitialize_AnyThread()
 	});
 }
 
+void UPrFirebasePerformanceModule_Android::SetPerformanceCollectionEnabled(bool enabled)
+{
+	if (auto Env = FAndroidApplication::GetJavaEnv())
+	{
+		static auto Method = FJavaWrapper::FindMethod(Env, FJavaWrapper::GameActivityClassID,
+			"AndroidThunkJava_FirebasePerformance_SetPerformanceCollectionEnabled", "(Z)V", false);
+
+		FJavaWrapper::CallVoidMethod(Env, FJavaWrapper::GameActivityThis, Method, bEnabled);
+	}
+}
+
 #endif // WITH_FIREBASE_PERFORMANCE && PLATFORM_ANDROID

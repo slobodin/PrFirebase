@@ -120,4 +120,9 @@ public class PrFirebaseAnalytics {
     {
         mFirebaseAnalytics.setUserProperty(name, value);
     }
+
+    public void setAnalyticsCollectionEnabled(boolean enabled)
+    {
+        mFirebaseAnalytics.setAnalyticsCollectionEnabled(enabled);
+    }
 }

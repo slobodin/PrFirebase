@@ -63,4 +63,9 @@ void UPrFirebasePerformanceModule_iOS::PostInitialize_AnyThread()
 	});
 }
 
+void UPrFirebasePerformanceModule_iOS::SetPerformanceCollectionEnabled(bool enabled)
+{
+#error "not implemented yet"
+}
+
 #endif // WITH_FIREBASE_PERFORMANCE && PLATFORM_IOS

@@ -68,6 +68,17 @@ void UPrFirebaseCrashlyticsModule_Android::AddAttribute(const FString& Key, cons
 	}
 }
 
+void UPrFirebaseCrashlyticsModule_Android::SetCrashlyticsCollectionEnabled(bool bEnabled)
+{
+	if (auto Env = FAndroidApplication::GetJavaEnv())
+	{
+		static auto Method = FJavaWrapper::FindMethod(Env, FJavaWrapper::GameActivityClassID,
+			"AndroidThunkJava_FirebaseCrashlytics_SetCrashlyticsCollectionEnabled", "(Z)V", false);
+
+		FJavaWrapper::CallVoidMethod(Env, FJavaWrapper::GameActivityThis, Method, bEnabled);
+	}
+}
+
 void UPrFirebaseCrashlyticsModule_Android::Initialize_AnyThread()
 {
 	if (auto Env = FAndroidApplication::GetJavaEnv())

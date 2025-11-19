@@ -35,6 +35,8 @@ public:
 
 	virtual bool IsAvailable() const final override { return WITH_FIREBASE_CRASHLYTICS; }
 
+	virtual void SetCrashlyticsCollectionEnabled(bool bEnabled) { Firebase_NotImplemented(); }
+
 protected:
 	friend class FCrashlyticsOutputDevice;
 	friend class FCrashlyticsOutputDeviceError;

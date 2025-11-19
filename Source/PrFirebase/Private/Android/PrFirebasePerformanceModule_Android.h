@@ -27,5 +27,7 @@ protected:
 
 	virtual void PostInitialize_AnyThread() override;
 
+	virtual void SetPerformanceCollectionEnabled(bool enabled) override;
+
 #endif // WITH_FIREBASE_PERFORMANCE && PLATFORM_ANDROID
 };

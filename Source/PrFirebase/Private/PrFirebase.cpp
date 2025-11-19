@@ -45,8 +45,7 @@ class FPrFirebase : public IPrFirebase
 
 		FirebaseProxy = NewObject<UPrFirebaseProxy>(GetTransientPackage(), PlatformClass);
 		FirebaseProxy->AddToRoot();
-		// Do not initialize automatically, wait for user consent
-		//FirebaseProxy->InitializeFirebase();
+		FirebaseProxy->InitializeFirebase();
 	}
 
 	virtual void ShutdownModule() override

@@ -246,6 +246,8 @@ public:
 
 	virtual bool IsAvailable() const final override { return WITH_FIREBASE_PERFORMANCE; }
 
+	virtual void SetPerformanceCollectionEnabled(bool enabled) { Firebase_NotImplemented(); }
+
 protected:
 	void UpdatePostfix();
 

@@ -40,5 +40,7 @@ public:
 
 	virtual void SetUserProperty(FString name, FString value) override;
 
+	virtual void SetAnalyticsCollectionEnabled(bool enabled) override;
+
 #endif
 };

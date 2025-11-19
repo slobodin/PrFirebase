@@ -341,6 +341,17 @@ void UPrFirebaseAnalyticsModule_Android::SetUserProperty(FString name, FString v
 	}
 }
 
+void UPrFirebaseAnalyticsModule_Android::SetAnalyticsCollectionEnabled(bool enabled)
+{
+	if (auto Env = FAndroidApplication::GetJavaEnv())
+	{
+		static auto Method = FJavaWrapper::FindMethod(Env, FJavaWrapper::GameActivityClassID,
+			"AndroidThunkJava_FirebaseAnalytics_SetAnalyticsCollectionEnabled", "(Z)V", false);
+
+		FJavaWrapper::CallVoidMethod(Env, FJavaWrapper::GameActivityThis, Method, enabled);
+	}
+}
+
 extern "C" {
 JNIEXPORT void Java_com_pr_firebase_analytics_PrFirebaseAnalytics_OnAppInstanceIdReady(JNIEnv* env, jobject obj)
 {

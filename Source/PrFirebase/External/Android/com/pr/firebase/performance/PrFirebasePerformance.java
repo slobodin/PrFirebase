@@ -89,4 +89,9 @@ public class PrFirebasePerformance {
 		Trace trace = getTrace(index);
 		trace.removeAttribute(name);
 	}
+
+	public void setPerformanceCollectionEnabled(boolean enabled)
+	{
+		FirebasePerformance.getInstance().setPerformanceCollectionEnabled(enabled);
+	}
 }

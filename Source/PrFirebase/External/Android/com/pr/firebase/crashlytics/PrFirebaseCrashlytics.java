@@ -32,4 +32,8 @@ public class PrFirebaseCrashlytics {
 		FirebaseCrashlytics.getInstance().setCustomKey(key, value);
 	}
 
+	public void setCrashlyticsCollectionEnabled(boolean enabled)
+	{
+		FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(enabled);
+	}
 }
