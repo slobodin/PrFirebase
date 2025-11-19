@@ -98,7 +98,7 @@ void UPrFirebasePerformanceModule_Android::SetPerformanceCollectionEnabled(bool 
 		static auto Method = FJavaWrapper::FindMethod(Env, FJavaWrapper::GameActivityClassID,
 			"AndroidThunkJava_FirebasePerformance_SetPerformanceCollectionEnabled", "(Z)V", false);
 
-		FJavaWrapper::CallVoidMethod(Env, FJavaWrapper::GameActivityThis, Method, bEnabled);
+		FJavaWrapper::CallVoidMethod(Env, FJavaWrapper::GameActivityThis, Method, enabled);
 	}
 }
 
