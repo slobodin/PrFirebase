@@ -257,7 +257,7 @@ void UPrFirebaseAnalyticsModule_Android::LogImpression(FPrFirebaseImpressionData
 
 		jobject BundleObject = Env->NewGlobalRef(Env->NewObject(BundleClass, BundleInit));
 
-		jstring AdPlatformJavaString = Env->NewStringUTF(TCHAR_TO_UTF8(TEXT("ironSource")));
+		jstring AdPlatformJavaString = Env->NewStringUTF(TCHAR_TO_UTF8(*ImpressionData.AdPlatform));
 		Env->CallVoidMethod(BundleObject, BundlePutString, AdPlatformParamName, AdPlatformJavaString);
 		Env->DeleteLocalRef(AdPlatformJavaString);
 		Env->DeleteLocalRef(AdPlatformParamName);

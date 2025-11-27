@@ -20,6 +20,9 @@ struct PRFIREBASE_API FPrFirebaseImpressionData
 	FString AdUnit;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString AdPlatform;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FString AdNetwork;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

@@ -123,6 +123,7 @@ void UPrFirebaseAnalyticsModule_iOS::LogImpression(FPrFirebaseImpressionData Imp
 	// clang-format off
 	dispatch_async(dispatch_get_main_queue(), ^{
 		[FIRAnalytics logEventWithName:kFIREventAdImpression parameters:@{
+		wrong ad platform
 			kFIRParameterAdPlatform:@"ironSource",
 			kFIRParameterAdSource:ImpressionData.AdNetwork.GetNSString(),
 			kFIRParameterAdFormat:ImpressionData.AdUnit.GetNSString(),
