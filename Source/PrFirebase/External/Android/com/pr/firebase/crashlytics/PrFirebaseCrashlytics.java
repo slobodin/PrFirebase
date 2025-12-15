@@ -4,6 +4,7 @@ package com.pr.firebase.crashlytics;
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import android.app.NativeActivity;
+import android.util.Log;
 
 public class PrFirebaseCrashlytics {
 
@@ -19,6 +20,8 @@ public class PrFirebaseCrashlytics {
 
 	public void writeLog(String log)
 	{
+		Log.i("PrFirebase", log);
+
 		FirebaseCrashlytics.getInstance().log(log);
 	}
 
