@@ -20,7 +20,7 @@ public class PrFirebaseCrashlytics {
 
 	public void writeLog(String log)
 	{
-		Log.i("PrFirebase", log);
+		//Log.i("PrFirebase", log);
 
 		FirebaseCrashlytics.getInstance().log(log);
 	}
