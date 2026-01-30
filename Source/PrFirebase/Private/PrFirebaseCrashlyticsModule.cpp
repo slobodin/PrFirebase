@@ -124,11 +124,6 @@ public:
 	}
 };
 
-void UPrFirebaseCrashlyticsModule::WriteError(const FString& Log)
-{
-	WriteError(Log, 0, TMap<FString, FString>{});
-}
-
 void UPrFirebaseCrashlyticsModule::CatchEngineLogs()
 {
 	check(GLog);
@@ -184,167 +179,123 @@ FString UPrFirebaseCrashlyticsModule::CrashlyticsLogFormat(const TCHAR* V, ELogV
 	}
 }
 
-void UPrFirebaseCrashlyticsModule::WriteBlueprintCallstack()
-{
-#if DO_BLUEPRINT_GUARD
-	const FBlueprintContextTracker* BlueprintExceptionTracker = FBlueprintContextTracker::TryGet();
-	if (BlueprintExceptionTracker && BlueprintExceptionTracker->GetCurrentScriptStack().Num() > 0)
-	{
-		FString ScriptStack = FString::Printf(TEXT("Script Stack (%d frames):\n"), BlueprintExceptionTracker->GetCurrentScriptStack().Num());
-		for (int32 FrameIdx = BlueprintExceptionTracker->GetCurrentScriptStack().Num() - 1; FrameIdx >= 0; --FrameIdx)
-		{
-			TStringBuilder<512> StringBuilder;
-			BlueprintExceptionTracker->GetCurrentScriptStack()[FrameIdx]->GetStackDescription(StringBuilder);
-			ScriptStack += FString(StringBuilder) + TEXT("\n");
-		}
-
-		WriteLog(ScriptStack);
-	}
-#endif
-}
-
 void UPrFirebaseCrashlyticsModule::Log(bool bCritical, const TCHAR* V, ELogVerbosity::Type Verbosity, const class FName& Category)
 {
 	static uint8 RecursionCounter = 0;
 	if (RecursionCounter > 0)
 	{
-		WriteError(TEXT("Crashlytics internal recursion!"));
+		//WriteError(TEXT("Crashlytics internal recursion!"));
 		return;
 	}
 
 	++RecursionCounter;
 
-	if (bCritical)
-	{
-		WriteBlueprintCallstack();
-		WriteError(FString::Printf(TEXT("Critical: %s"), *CrashlyticsLogFormat(V, Verbosity, Category)));
-	}
-	else
-	{
-		static EPrFirebaseLogLevel DefaultLogLevel = GetDefault<UPrFirebaseSettings>()->FirebaseCrashlytics_LogLevel;
-		static EPrFirebaseLogLevel ErrorLogLevel = GetDefault<UPrFirebaseSettings>()->FirebaseCrashlytics_ErrorLogLevel;
-		static TSet<FName> ForcedLogCategories = TSet<FName>(GetDefault<UPrFirebaseSettings>()->FirebaseCrashlytics_ForcedLogCategories);
-		static TSet<FName> IgnoredLogCategories = TSet<FName>(GetDefault<UPrFirebaseSettings>()->FirebaseCrashlytics_IgnoredLogCategories);
+	static EPrFirebaseLogLevel DefaultLogLevel = GetDefault<UPrFirebaseSettings>()->FirebaseCrashlytics_LogLevel;
+	static TSet<FName> ForcedLogCategories = TSet<FName>(GetDefault<UPrFirebaseSettings>()->FirebaseCrashlytics_ForcedLogCategories);
+	static TSet<FName> IgnoredLogCategories = TSet<FName>(GetDefault<UPrFirebaseSettings>()->FirebaseCrashlytics_IgnoredLogCategories);
 
 #if WITH_FIREBASE_REMOTECONFIG
-		static const FString ForcedLogCategoriesParameterName = TEXT("pr-forced-log-categories");
-		static const FString IgnoredLogCategoriesParameterName = TEXT("pr-ignored-log-categories");
-		static const FString LogLevelParameterName = TEXT("pr-log-level");
-		static const FString ErrorLogLevelParameterName = TEXT("pr-error-log-level");
-		static bool bRemoteConfigReady = false;
+	static const FString ForcedLogCategoriesParameterName = TEXT("pr-forced-log-categories");
+	static const FString IgnoredLogCategoriesParameterName = TEXT("pr-ignored-log-categories");
+	static const FString LogLevelParameterName = TEXT("pr-log-level");
+	static const FString ErrorLogLevelParameterName = TEXT("pr-error-log-level");
+	static bool bRemoteConfigReady = false;
 
-		UPrFirebaseRemoteConfigModule* RemoteConfigModule = UPrFirebaseLibrary::GetFirebaseProxy()->GetRemoteConfigModule();
-		if (!bRemoteConfigReady && RemoteConfigModule->IsFetched())
+	UPrFirebaseRemoteConfigModule* RemoteConfigModule = UPrFirebaseLibrary::GetFirebaseProxy()->GetRemoteConfigModule();
+	if (!bRemoteConfigReady && RemoteConfigModule->IsFetched())
+	{
+		// Forced log categories
+		if (RemoteConfigModule->HasValue(ForcedLogCategoriesParameterName))
 		{
-			// Forced log categories
-			if (RemoteConfigModule->HasValue(ForcedLogCategoriesParameterName))
+			FString LogCategoriesRaw = TEXT("");
+			RemoteConfigModule->GetStringValue(ForcedLogCategoriesParameterName, LogCategoriesRaw);
+
+			TArray<FString> LogCategoriesRawArray;
+			LogCategoriesRaw.ParseIntoArray(LogCategoriesRawArray, TEXT(","), true);
+
+			for (FString& LogCategoryRaw : LogCategoriesRawArray)
 			{
-				FString LogCategoriesRaw = TEXT("");
-				RemoteConfigModule->GetStringValue(ForcedLogCategoriesParameterName, LogCategoriesRaw);
-
-				TArray<FString> LogCategoriesRawArray;
-				LogCategoriesRaw.ParseIntoArray(LogCategoriesRawArray, TEXT(","), true);
-
-				for (FString& LogCategoryRaw : LogCategoriesRawArray)
+				LogCategoryRaw.TrimStartAndEndInline();
+				if (LogCategoryRaw.Len() > 0)
 				{
-					LogCategoryRaw.TrimStartAndEndInline();
-					if (LogCategoryRaw.Len() > 0)
-					{
-						ForcedLogCategories.Add(FName(*LogCategoryRaw));
-					}
+					ForcedLogCategories.Add(FName(*LogCategoryRaw));
 				}
 			}
-
-			// Ignored log categories
-			if (RemoteConfigModule->HasValue(IgnoredLogCategoriesParameterName))
-			{
-				FString LogCategoriesRaw = TEXT("");
-				RemoteConfigModule->GetStringValue(IgnoredLogCategoriesParameterName, LogCategoriesRaw);
-
-				TArray<FString> LogCategoriesRawArray;
-				LogCategoriesRaw.ParseIntoArray(LogCategoriesRawArray, TEXT(","), true);
-
-				for (FString& LogCategoryRaw : LogCategoriesRawArray)
-				{
-					LogCategoryRaw.TrimStartAndEndInline();
-					if (LogCategoryRaw.Len() > 0)
-					{
-						IgnoredLogCategories.Add(FName(*LogCategoryRaw));
-					}
-				}
-			}
-
-			if (RemoteConfigModule->HasValue(LogLevelParameterName))
-			{
-				static const UEnum* EnumType = StaticEnum<EPrFirebaseLogLevel>();
-				if (EnumType)
-				{
-					FString LogLevelStringRaw = EnumType->GetNameStringByValue(static_cast<int64>(DefaultLogLevel));
-					RemoteConfigModule->GetStringValue(LogLevelParameterName, LogLevelStringRaw);
-					LogLevelStringRaw.TrimStartAndEndInline();
-					const int64 EnumValue = EnumType->GetValueByNameString(LogLevelStringRaw, EGetByNameFlags::None);
-					if (EnumValue != INDEX_NONE)
-					{
-						DefaultLogLevel = static_cast<EPrFirebaseLogLevel>(EnumValue);
-					}
-				}
-			}
-
-			if (RemoteConfigModule->HasValue(ErrorLogLevelParameterName))
-			{
-				static const UEnum* EnumType = StaticEnum<EPrFirebaseLogLevel>();
-				if (EnumType)
-				{
-					FString LogLevelStringRaw = EnumType->GetNameStringByValue(static_cast<int64>(ErrorLogLevel));
-					RemoteConfigModule->GetStringValue(ErrorLogLevelParameterName, LogLevelStringRaw);
-					LogLevelStringRaw.TrimStartAndEndInline();
-					const int64 EnumValue = EnumType->GetValueByNameString(LogLevelStringRaw, EGetByNameFlags::None);
-					if (EnumValue != INDEX_NONE)
-					{
-						ErrorLogLevel = static_cast<EPrFirebaseLogLevel>(EnumValue);
-					}
-				}
-			}
-
-			bRemoteConfigReady = true;
 		}
+
+		// Ignored log categories
+		if (RemoteConfigModule->HasValue(IgnoredLogCategoriesParameterName))
+		{
+			FString LogCategoriesRaw = TEXT("");
+			RemoteConfigModule->GetStringValue(IgnoredLogCategoriesParameterName, LogCategoriesRaw);
+
+			TArray<FString> LogCategoriesRawArray;
+			LogCategoriesRaw.ParseIntoArray(LogCategoriesRawArray, TEXT(","), true);
+
+			for (FString& LogCategoryRaw : LogCategoriesRawArray)
+			{
+				LogCategoryRaw.TrimStartAndEndInline();
+				if (LogCategoryRaw.Len() > 0)
+				{
+					IgnoredLogCategories.Add(FName(*LogCategoryRaw));
+				}
+			}
+		}
+
+		if (RemoteConfigModule->HasValue(LogLevelParameterName))
+		{
+			static const UEnum* EnumType = StaticEnum<EPrFirebaseLogLevel>();
+			if (EnumType)
+			{
+				FString LogLevelStringRaw = EnumType->GetNameStringByValue(static_cast<int64>(DefaultLogLevel));
+				RemoteConfigModule->GetStringValue(LogLevelParameterName, LogLevelStringRaw);
+				LogLevelStringRaw.TrimStartAndEndInline();
+				const int64 EnumValue = EnumType->GetValueByNameString(LogLevelStringRaw, EGetByNameFlags::None);
+				if (EnumValue != INDEX_NONE)
+				{
+					DefaultLogLevel = static_cast<EPrFirebaseLogLevel>(EnumValue);
+				}
+			}
+		}
+
+		if (RemoteConfigModule->HasValue(ErrorLogLevelParameterName))
+		{
+			static const UEnum* EnumType = StaticEnum<EPrFirebaseLogLevel>();
+			if (EnumType)
+			{
+				FString LogLevelStringRaw = EnumType->GetNameStringByValue(static_cast<int64>(ErrorLogLevel));
+				RemoteConfigModule->GetStringValue(ErrorLogLevelParameterName, LogLevelStringRaw);
+				LogLevelStringRaw.TrimStartAndEndInline();
+				const int64 EnumValue = EnumType->GetValueByNameString(LogLevelStringRaw, EGetByNameFlags::None);
+				if (EnumValue != INDEX_NONE)
+				{
+					ErrorLogLevel = static_cast<EPrFirebaseLogLevel>(EnumValue);
+				}
+			}
+		}
+
+		bRemoteConfigReady = true;
+	}
 #endif
 
-		const uint8 VerbosityValue = static_cast<uint8>(Verbosity);
-		if (VerbosityValue != static_cast<uint8>(EPrFirebaseLogLevel::NoLogging))
-		{
-			const uint8 LogLevelValue = static_cast<uint8>(DefaultLogLevel);
-			const uint8 ErrorLogLevelValue = static_cast<uint8>(ErrorLogLevel);
+	const uint8 VerbosityValue = static_cast<uint8>(Verbosity);
+	if (VerbosityValue != static_cast<uint8>(EPrFirebaseLogLevel::NoLogging))
+	{
+		const uint8 LogLevelValue = static_cast<uint8>(DefaultLogLevel);
 
-			if (ForcedLogCategories.Contains(Category))
-			{
-				if (ErrorLogLevelValue >= VerbosityValue)
-				{
-					WriteBlueprintCallstack();
-					const auto Msg = CrashlyticsLogFormat(V, Verbosity, Category);
-					WriteLog(Msg);
-					WriteError(Msg);
-				}
-				else
-				{
-					WriteLog(CrashlyticsLogFormat(V, Verbosity, Category));
-				}
-			}
-			else if (IgnoredLogCategories.Contains(Category))
-			{
-				// Do nothing
-			}
-			else if (ErrorLogLevelValue >= VerbosityValue)
-			{
-				WriteBlueprintCallstack();
-				const auto Msg = CrashlyticsLogFormat(V, Verbosity, Category);
-				WriteLog(Msg);
-				WriteError(Msg);
-			}
-			else if (LogLevelValue >= VerbosityValue)
-			{
-				WriteLog(CrashlyticsLogFormat(V, Verbosity, Category));
-			}
+		bool shouldLog = bCritical || (LogLevelValue >= VerbosityValue) || ForcedLogCategories.Contains(Category);
+		if (IgnoredLogCategories.Contains(Category))
+		{
+			shouldLog = false;
+		}
+
+		if (shouldLog)
+		{
+			const FString Msg = bCritical
+									? FString::Printf(TEXT("Critical error: %s"), *CrashlyticsLogFormat(V, Verbosity, Category))
+									: CrashlyticsLogFormat(V, Verbosity, Category);
+
+			WriteLog(Msg);
 		}
 	}
 

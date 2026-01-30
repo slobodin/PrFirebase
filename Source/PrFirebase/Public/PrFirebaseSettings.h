@@ -52,10 +52,6 @@ public:
 	UPROPERTY(Config, EditAnywhere, Category = "Firebase|Crashlytics")
 	EPrFirebaseLogLevel FirebaseCrashlytics_LogLevel;
 
-	/* You can change this parameter from Firebase Remote Config (use key "pr-error-log-level" e.g.: pr-error-log-level: Fatal) */
-	UPROPERTY(Config, EditAnywhere, Category = "Firebase|Crashlytics")
-	EPrFirebaseLogLevel FirebaseCrashlytics_ErrorLogLevel;
-
 	/* You can change this parameter from Firebase Remote Config (use key "pr-forced-log-categories" e.g.: pr-forced-log-categories: LogCrashlytics, LogPerformance, etc.) */
 	UPROPERTY(Config, EditAnywhere, Category = "Firebase|Crashlytics")
 	TArray<FName> FirebaseCrashlytics_ForcedLogCategories;

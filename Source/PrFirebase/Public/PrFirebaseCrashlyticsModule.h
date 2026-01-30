@@ -25,11 +25,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Firebase|Crashlytics|Log")
 	virtual void WriteLog(const FString& Log) { Firebase_NotImplemented(); }
 
-	void WriteError(const FString& Log);
-
-	UFUNCTION(BlueprintCallable, Category = "Firebase|Crashlytics|Log", meta = (AutoCreateRefTerm = "UserInfo"))
-	virtual void WriteError(const FString& Log, int32 Code, const TMap<FString, FString>& UserInfo) { Firebase_NotImplemented(); }
-
 	UFUNCTION(BlueprintCallable, Category = "Firebase|Crashlytics|Value")
 	virtual void AddAttribute(const FString& Key, const FString& Value) { Firebase_NotImplemented(); }
 
@@ -44,8 +39,6 @@ protected:
 	void CatchEngineLogs();
 
 	FString CrashlyticsLogFormat(const TCHAR* V, ELogVerbosity::Type Verbosity, const class FName& Category);
-
-	void WriteBlueprintCallstack();
 
 	void Log(bool bCritical, const TCHAR* V, ELogVerbosity::Type Verbosity, const class FName& Category);
 };

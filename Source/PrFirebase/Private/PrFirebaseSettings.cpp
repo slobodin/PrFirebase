@@ -11,7 +11,6 @@ UPrFirebaseSettings::UPrFirebaseSettings(const FObjectInitializer& ObjectInitial
 	, bFirebaseCrashlyticsEnable(false)
 	, bFirebaseCrashlytics_SendNotes(true)
 	, FirebaseCrashlytics_LogLevel(EPrFirebaseLogLevel::Warning)
-	, FirebaseCrashlytics_ErrorLogLevel(EPrFirebaseLogLevel::Fatal)
 	, bFirebaseRemoteConfigEnable(false)
 	, FirebaseRemoteConfig_ExpirationDurationForFetch(60)
 	, bFirebaseAuthEnable(false)

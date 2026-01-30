@@ -20,8 +20,6 @@ public:
 
 	virtual void WriteLog(const FString& Log) override;
 
-	virtual void WriteError(const FString& Log, int32 Code, const TMap<FString, FString>& UserInfo) override;
-
 	virtual void AddAttribute(const FString& Key, const FString& Value) override;
 
 	virtual void SetCrashlyticsCollectionEnabled(bool bEnabled) override;

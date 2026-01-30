@@ -22,22 +22,6 @@ void UPrFirebaseCrashlyticsModule_iOS::WriteLog(const FString& Log)
 	[[FIRCrashlytics crashlytics] log:Log.GetNSString()];
 }
 
-void UPrFirebaseCrashlyticsModule_iOS::WriteError(const FString& Log, int32 Code, const TMap<FString, FString>& UserInfo)
-{
-	NSDictionary<NSErrorUserInfoKey, id>* UserInfoDict = nil;
-	if (UserInfo.Num() > 0)
-	{
-		UserInfoDict = [NSMutableDictionary dictionaryWithCapacity:UserInfo.Num()];
-		for (const auto& UserInfoPair : UserInfo)
-		{
-			[UserInfoDict setValue:[NSString stringWithFString:UserInfoPair.Value] forKey:[NSString stringWithFString:UserInfoPair.Key]];
-		}
-	}
-
-	NSError* error = [NSError errorWithDomain:Log.GetNSString() code:Code userInfo:UserInfoDict];
-	[[FIRCrashlytics crashlytics] recordError:error];
-}
-
 void UPrFirebaseCrashlyticsModule_iOS::AddAttribute(const FString& Key, const FString& Value)
 {
 	[[FIRCrashlytics crashlytics] setCustomValue:Value.GetNSString() forKey:Key.GetNSString()];
