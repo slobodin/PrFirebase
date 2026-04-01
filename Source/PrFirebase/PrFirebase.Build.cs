@@ -141,8 +141,8 @@ namespace UnrealBuildTool.Rules
 					PublicAdditionalFrameworks.Add(
 						new Framework(
 							"PromisesSwift",
-							"../../ThirdParty/iOS/PromisesSwift.embeddedframework.zip"
-						)
+                            "../../ThirdParty/iOS/Promises.embeddedframework.zip"
+                        )
 					);
 
 					/* Crashlytics */
@@ -173,12 +173,14 @@ namespace UnrealBuildTool.Rules
 							)
 						);
 
-						PublicAdditionalFrameworks.Add(
-							new Framework(
-								"Protobuf",
-								"../../ThirdParty/iOS/Protobuf.embeddedframework.zip"
-							)
-						);
+						throw new NotImplementedException("Protobuf requied?");
+
+      //                  PublicAdditionalFrameworks.Add(
+						//	new Framework(
+						//		"Protobuf",
+						//		"../../ThirdParty/iOS/Protobuf.embeddedframework.zip"
+						//	)
+						//);
                     }
 
                     /* Performance */
@@ -205,40 +207,43 @@ namespace UnrealBuildTool.Rules
 							)
 						);
 
-						PublicAdditionalFrameworks.Add(
-							new Framework(
-								"Protobuf",
-								"../../ThirdParty/iOS/Protobuf.embeddedframework.zip"
-							)
-						);
+						//PublicAdditionalFrameworks.Add(
+						//	new Framework(
+						//		"Protobuf",
+						//		"../../ThirdParty/iOS/Protobuf.embeddedframework.zip"
+						//	)
+						//);
                     }
 
                     /* Auth */
                     if (bFirebaseAuthEnable)
-                    {
-						PublicAdditionalFrameworks.Add(
-							new Framework(
-								"FirebaseAuth",
-								"../../ThirdParty/iOS/FirebaseAuth.embeddedframework.zip"
-							)
-						);
+					{
+						throw new NotImplementedException("bFirebaseAuthEnable is not implemented for ios");
 
-						PublicAdditionalFrameworks.Add(
-							new Framework(
-								"GTMSessionFetcher",
-								"../../ThirdParty/iOS/GTMSessionFetcher.embeddedframework.zip"
-							)
-						);
+						//PublicAdditionalFrameworks.Add(
+						//	new Framework(
+						//		"FirebaseAuth",
+						//		"../../ThirdParty/iOS/FirebaseAuth.embeddedframework.zip"
+						//	)
+						//);
+
+						//PublicAdditionalFrameworks.Add(
+						//	new Framework(
+						//		"GTMSessionFetcher",
+						//		"../../ThirdParty/iOS/GTMSessionFetcher.embeddedframework.zip"
+						//	)
+						//);
                     }
 
                     if (bFirebaseAppDistributionEnable)
                     {
-                        PublicAdditionalFrameworks.Add(
-                            new Framework(
-                                "FirebaseAppDistribution",
-                                "../../ThirdParty/iOS/FirebaseAppDistribution.embeddedframework.zip"
-                            )
-                        );
+                        throw new NotImplementedException("bFirebaseAppDistributionEnable is not implemented for ios");
+                        //PublicAdditionalFrameworks.Add(
+                        //    new Framework(
+                        //        "FirebaseAppDistribution",
+                        //        "../../ThirdParty/iOS/FirebaseAppDistribution.embeddedframework.zip"
+                        //    )
+                        //);
                     }
 
                     PublicSystemLibraries.Add("sqlite3");
@@ -252,11 +257,13 @@ namespace UnrealBuildTool.Rules
                     // NOTE: By default Unreal Engine does not have paths to Swift libraries added to Library Search paths,
                     // so you have to point UBT to it. Swift libraries are located in Xcode toolchain.
                     // https://rassadin.net/swift-frameworks-unreal/
+					/*
                     string SDKROOT = Utils.RunLocalProcessAndReturnStdOut("/usr/bin/xcrun", "--sdk iphoneos --show-sdk-path");
                     PublicSystemLibraryPaths.Add(SDKROOT + "/usr/lib/swift");
                     PublicSystemLibraryPaths.Add(SDKROOT + "../../../../../../Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos");
                     PublicSystemLibraryPaths.Add(SDKROOT + "../../../../../../Toolchains/XcodeDefault.xctoolchain/usr/lib/swift-5.0/iphoneos");
                     PublicSystemLibraryPaths.Add(SDKROOT + "../../../../../../Toolchains/XcodeDefault.xctoolchain/usr/lib/swift-5.5/iphoneos");
+					*/
                 }
                 else if (Target.Platform == UnrealTargetPlatform.Android)
                 {
