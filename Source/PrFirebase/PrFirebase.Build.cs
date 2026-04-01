@@ -145,8 +145,15 @@ namespace UnrealBuildTool.Rules
                         )
 					);
 
-					/* Crashlytics */
-					if (bFirebaseCrashlyticsEnable)
+                    PublicAdditionalFrameworks.Add(
+                        new Framework(
+                            "FirebaseSharedSwift",
+                            "../../ThirdParty/iOS/FirebaseSharedSwift.embeddedframework.zip"
+                        )
+                    );
+
+                    /* Crashlytics */
+                    if (bFirebaseCrashlyticsEnable)
 					{
 						PublicAdditionalFrameworks.Add(
 							new Framework(
@@ -207,12 +214,19 @@ namespace UnrealBuildTool.Rules
 							)
 						);
 
-						//PublicAdditionalFrameworks.Add(
-						//	new Framework(
-						//		"Protobuf",
-						//		"../../ThirdParty/iOS/Protobuf.embeddedframework.zip"
-						//	)
-						//);
+                        PublicAdditionalFrameworks.Add(
+                            new Framework(
+                                "FirebaseRemoteConfigInterop",
+                                "../../ThirdParty/iOS/FirebaseRemoteConfigInterop.embeddedframework.zip"
+                            )
+                        );
+
+                        //PublicAdditionalFrameworks.Add(
+                        //	new Framework(
+                        //		"Protobuf",
+                        //		"../../ThirdParty/iOS/Protobuf.embeddedframework.zip"
+                        //	)
+                        //);
                     }
 
                     /* Auth */
