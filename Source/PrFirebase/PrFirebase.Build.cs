@@ -147,6 +147,13 @@ namespace UnrealBuildTool.Rules
 
                     PublicAdditionalFrameworks.Add(
                         new Framework(
+                            "FBLPromises",
+                            "../../ThirdParty/iOS/FBLPromises.embeddedframework.zip"
+                        )
+                    );
+
+                    PublicAdditionalFrameworks.Add(
+                        new Framework(
                             "FirebaseSharedSwift",
                             "../../ThirdParty/iOS/FirebaseSharedSwift.embeddedframework.zip"
                         )
@@ -261,7 +268,6 @@ namespace UnrealBuildTool.Rules
                     }
 
                     PublicSystemLibraries.Add("sqlite3");
-                    PublicSystemLibraries.Add("z");
 
                     PrivateIncludePaths.Add("PrFirebase/External/iOS");
 
