@@ -11,7 +11,8 @@ class UPrFirebaseRemoteConfigModule_iOS : public UPrFirebaseRemoteConfigModule
 {
 	GENERATED_BODY()
 
-#if WITH_FIREBASE_REMOTECONFIG && PLATFORM_IOS
+//#if WITH_FIREBASE_REMOTECONFIG && PLATFORM_IOS
+	#if 0
 
 	UPrFirebaseRemoteConfigModule_iOS();
 

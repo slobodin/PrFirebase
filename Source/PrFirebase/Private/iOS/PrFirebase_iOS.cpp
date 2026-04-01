@@ -6,8 +6,6 @@
 
 #if WITH_FIREBASE && PLATFORM_IOS
 #include "iOS/PrFirebaseAnalyticsModule_iOS.h"
-#include "iOS/PrFirebaseAppDistributionModule_iOS.h"
-#include "iOS/PrFirebaseAuthModule_iOS.h"
 #include "iOS/PrFirebaseCrashlyticsModule_iOS.h"
 #include "iOS/PrFirebasePerformanceModule_iOS.h"
 #include "iOS/PrFirebaseRemoteConfigModule_iOS.h"
@@ -19,8 +17,8 @@ void UPrFirebase_iOS::InitializeModuleList()
 	ModuleClasses.Add(UPrFirebaseRemoteConfigModule::StaticClass(), UPrFirebaseRemoteConfigModule_iOS::StaticClass());
 	ModuleClasses.Add(UPrFirebaseCrashlyticsModule::StaticClass(), UPrFirebaseCrashlyticsModule_iOS::StaticClass());
 	ModuleClasses.Add(UPrFirebasePerformanceModule::StaticClass(), UPrFirebasePerformanceModule_iOS::StaticClass());
-	ModuleClasses.Add(UPrFirebaseAuthModule::StaticClass(), UPrFirebaseAuthModule_iOS::StaticClass());
-	ModuleClasses.Add(UPrFirebaseAppDistributionModule::StaticClass(), UPrFirebaseAppDistributionModule_iOS::StaticClass());
+	ModuleClasses.Add(UPrFirebaseAuthModule::StaticClass(), UPrFirebaseAuthModule::StaticClass());
+	ModuleClasses.Add(UPrFirebaseAppDistributionModule::StaticClass(), UPrFirebaseAppDistributionModule::StaticClass());
 	ModuleClasses.Add(UPrFirebaseAnalyticsModule::StaticClass(), UPrFirebaseAnalyticsModule_iOS::StaticClass());
 }
 
@@ -29,7 +27,6 @@ void UPrFirebase_iOS::Initialize()
 	dispatch_async(dispatch_get_main_queue(), ^{
 	  PreInitializeModules_AnyThread();
 	  [FIRApp configure];
-	  [FIRAnalytics setAnalyticsCollectionEnabled:YES];
 	  InitializeModules_AnyThread();
 	});
 }

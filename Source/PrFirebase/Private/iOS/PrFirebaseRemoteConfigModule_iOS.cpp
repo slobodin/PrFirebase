@@ -2,7 +2,8 @@
 
 #include "iOS/PrFirebaseRemoteConfigModule_iOS.h"
 
-#if WITH_FIREBASE_REMOTECONFIG && PLATFORM_IOS
+//#if WITH_FIREBASE_REMOTECONFIG && PLATFORM_IOS
+#if 0
 
 #include "PrFirebaseDefines.h"
 #include "PrFirebaseSettings.h"

@@ -123,8 +123,7 @@ void UPrFirebaseAnalyticsModule_iOS::LogImpression(FPrFirebaseImpressionData Imp
 	// clang-format off
 	dispatch_async(dispatch_get_main_queue(), ^{
 		[FIRAnalytics logEventWithName:kFIREventAdImpression parameters:@{
-		wrong ad platform
-			kFIRParameterAdPlatform:@"ironSource",
+			kFIRParameterAdPlatform:ImpressionData.AdPlatform.GetNSString(),
 			kFIRParameterAdSource:ImpressionData.AdNetwork.GetNSString(),
 			kFIRParameterAdFormat:ImpressionData.AdUnit.GetNSString(),
 			kFIRParameterAdUnitName:ImpressionData.InstanceName.GetNSString(),
@@ -159,12 +158,16 @@ void UPrFirebaseAnalyticsModule_iOS::LogRevenue(float RevenueUSD)
 
 void UPrFirebaseAnalyticsModule_iOS::SetUserProperty(FString name, FString value)
 {
-#error "implement SetUserProperty";
+	dispatch_async(dispatch_get_main_queue(), ^{
+	  [FIRAnalytics setUserPropertyString:value.GetNSString()
+								  forName:name.GetNSString()];
+	});
 }
 
 void UPrFirebaseAnalyticsModule_iOS::SetAnalyticsCollectionEnabled(bool enabled)
 {
-#error "implement this function & also disable default analytics collection for ios";
+	// todo_ios: need dispatch_async(dispatch_get_main_queue(), ^{ ???
+	[FIRAnalytics setAnalyticsCollectionEnabled:YES];
 }
 
 #endif // WITH_FIREBASE && PLATFORM_IOS

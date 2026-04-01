@@ -29,13 +29,13 @@ void UPrFirebaseCrashlyticsModule_iOS::AddAttribute(const FString& Key, const FS
 
 void UPrFirebaseCrashlyticsModule_iOS::Initialize_AnyThread()
 {
-	[[FIRCrashlytics crashlytics] setCrashlyticsCollectionEnabled:YES];
 	CatchEngineLogs();
 }
 
 void UPrFirebaseCrashlyticsModule_iOS::SetCrashlyticsCollectionEnabled(bool bEnabled)
 {
-#error "implement it"
+	// todo_ios: need dispatch_async(dispatch_get_main_queue(), ^{ ???
+	[[FIRCrashlytics crashlytics] setCrashlyticsCollectionEnabled:bEnabled];
 }
 
 #endif // WITH_FIREBASE_CRASHLYTICS && PLATFORM_IOS
