@@ -140,7 +140,7 @@ namespace UnrealBuildTool.Rules
 
 					PublicAdditionalFrameworks.Add(
 						new Framework(
-							"PromisesSwift",
+                            "Promises",
                             "../../ThirdParty/iOS/Promises.embeddedframework.zip"
                         )
 					);
