@@ -34,8 +34,9 @@ void UPrFirebaseCrashlyticsModule_iOS::Initialize_AnyThread()
 
 void UPrFirebaseCrashlyticsModule_iOS::SetCrashlyticsCollectionEnabled(bool bEnabled)
 {
-	// todo_ios: need dispatch_async(dispatch_get_main_queue(), ^{ ???
-	[[FIRCrashlytics crashlytics] setCrashlyticsCollectionEnabled:bEnabled];
+	dispatch_async(dispatch_get_main_queue(), ^{
+	  [[FIRCrashlytics crashlytics] setCrashlyticsCollectionEnabled:bEnabled];
+	});
 }
 
 #endif // WITH_FIREBASE_CRASHLYTICS && PLATFORM_IOS

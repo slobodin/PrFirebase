@@ -166,8 +166,9 @@ void UPrFirebaseAnalyticsModule_iOS::SetUserProperty(FString name, FString value
 
 void UPrFirebaseAnalyticsModule_iOS::SetAnalyticsCollectionEnabled(bool enabled)
 {
-	// todo_ios: need dispatch_async(dispatch_get_main_queue(), ^{ ???
-	[FIRAnalytics setAnalyticsCollectionEnabled:YES];
+	dispatch_async(dispatch_get_main_queue(), ^{
+	  [FIRAnalytics setAnalyticsCollectionEnabled:YES];
+	});
 }
 
 #endif // WITH_FIREBASE && PLATFORM_IOS
