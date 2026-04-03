@@ -273,6 +273,11 @@ namespace UnrealBuildTool.Rules
 
                     string PluginPath = Utils.MakePathRelativeTo(ModuleDirectory, Target.RelativeEnginePath);
                     AdditionalPropertiesForReceipt.Add("IOSPlugin", Path.Combine(PluginPath, "PrFirebase_UPL_IOS.xml"));
+
+                    AdditionalBundleResources.Add(new BundleResource(
+						Path.Combine(ModuleDirectory, "../../../../Config/Firebase/GoogleService-Info.plist"),
+						"GoogleService-Info.plist"
+						));
                 }
                 else if (Target.Platform == UnrealTargetPlatform.Android)
                 {
