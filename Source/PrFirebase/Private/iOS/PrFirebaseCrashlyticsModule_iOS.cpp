@@ -15,7 +15,9 @@ void UPrFirebaseCrashlyticsModule_iOS::Crash()
 void UPrFirebaseCrashlyticsModule_iOS::SetUserIdentifier(const FString& UserIdentifier)
 {
 	//  todo_ios: ?  (+ also need dispatch async?)
-	[[FIRCrashlytics crashlytics] setUserID:UserIdentifier.GetNSString()];
+	dispatch_async(dispatch_get_main_queue(), ^{
+	  [[FIRCrashlytics crashlytics] setUserID:UserIdentifier.GetNSString()];
+	});
 }
 
 void UPrFirebaseCrashlyticsModule_iOS::WriteLog(const FString& Log)
