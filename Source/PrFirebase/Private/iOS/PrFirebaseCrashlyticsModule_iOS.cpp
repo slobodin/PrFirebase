@@ -14,16 +14,19 @@ void UPrFirebaseCrashlyticsModule_iOS::Crash()
 
 void UPrFirebaseCrashlyticsModule_iOS::SetUserIdentifier(const FString& UserIdentifier)
 {
-	//  todo_ios: ?  (+ also need dispatch async?)
+	const FString userId = UserIdentifier;
+
 	dispatch_async(dispatch_get_main_queue(), ^{
-	  [[FIRCrashlytics crashlytics] setUserID:UserIdentifier.GetNSString()];
+	  [[FIRCrashlytics crashlytics] setUserID:userId.GetNSString()];
 	});
 }
 
 void UPrFirebaseCrashlyticsModule_iOS::WriteLog(const FString& Log)
 {
-	// disabled for now
-	//[[FIRCrashlytics crashlytics] log:Log.GetNSString()];
+	const FString logCopy = Log;
+	dispatch_async(dispatch_get_main_queue(), ^{
+	  [[FIRCrashlytics crashlytics] log:logCopy.GetNSString()];
+	});
 }
 
 void UPrFirebaseCrashlyticsModule_iOS::AddAttribute(const FString& Key, const FString& Value)
