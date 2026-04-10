@@ -13,7 +13,7 @@
 
 void UPrFirebasePerformanceModule_iOS::SetPerformanceCollectionEnabled(bool enabled)
 {
-    // todo_ios: implement it
+	[FIRPerformance sharedInstance].dataCollectionEnabled = enabled;
 }
 
 #endif // WITH_FIREBASE_PERFORMANCE && PLATFORM_IOS
